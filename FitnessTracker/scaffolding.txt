@@ -1,0 +1,1 @@
+Scaffold-DbContext  -NoPluralize "Server=DevServer;initial catalog=FitnessTracker;user id=sa;password=pass@word1;MultipleActiveResultSets=True;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -Project "BusinessEntities" -OutputDir EF -Force -Context ClientDBContext -schema dbo
