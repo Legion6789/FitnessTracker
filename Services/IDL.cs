@@ -15,5 +15,6 @@ namespace Services
         List<Exercise> GetExercisesByBodyPart(string bodyPartId);
         List<Workout> GetWorkoutList();
         Workout GetWorkoutById(int workoutId);
+        bool AddWorkout(Workout workout);
     }
 }

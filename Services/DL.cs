@@ -120,5 +120,27 @@ namespace Services
             }
             return workout;
         }
+
+
+        public bool AddWorkout(Workout workout)
+        {
+            try
+            {
+                Workouts w = new Workouts
+                {
+                    WorkoutName = workout.WorkoutName
+                };
+
+                db.Workouts.Add(w);
+                db.SaveChanges();
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return false;
+        }
     }
 }

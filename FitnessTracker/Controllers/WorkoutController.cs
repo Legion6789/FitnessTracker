@@ -29,5 +29,11 @@ namespace FitnessTracker.Controllers
         {
             return DL.GetWorkoutById(workoutId);
         }
+
+        [HttpPost("AddWorkout")]
+        public bool PostAddWorkout(Workout workout)
+        {
+            return DL.AddWorkout(workout);
+        }
     }
 }
