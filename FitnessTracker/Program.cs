@@ -13,6 +13,8 @@ builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializ
 
 builder.Services.AddScoped<IDL, DL>();
 
+builder.Logging.AddEventLog(settings => { settings.SourceName = "FitnessTracker"; });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

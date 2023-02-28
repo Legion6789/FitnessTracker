@@ -1,4 +1,5 @@
 ﻿using BusinessEntities.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Services
 {
     public interface IDL
     {
+        ILogger logger { get; set; }
         object GetExerciseList(string clientHashString);
         Exercise GetExerciseById(string exerciseId);
         List<Exercise> GetExercisesByMuscle(string muscleId);

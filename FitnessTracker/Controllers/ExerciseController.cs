@@ -16,6 +16,7 @@ namespace FitnessTracker.Controllers
         {
             DL = dL;
             this.logger = logger;
+            DL.logger = logger;
         }
 
         [HttpGet("ExerciseList")]

@@ -1,5 +1,6 @@
 ﻿using BusinessEntities.EF;
 using BusinessEntities.Models;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Services
     public class DL : IDL
     {
         private ClientDBContext db = new ClientDBContext();
+        public ILogger logger { get; set; }
 
         public object GetExerciseList(string clientHashString)
         {
@@ -28,7 +30,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
 
             if (serverHashString == getUnescapedHashString(clientHashString))
@@ -69,7 +71,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
             return exercise;
         }
@@ -85,7 +87,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
             return exerciseList;
         }
@@ -102,7 +104,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
             return exerciseList;
         }
@@ -117,7 +119,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
             return workoutList;
         }
@@ -149,7 +151,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
             return workout;
         }
@@ -171,7 +173,7 @@ namespace Services
             }
             catch (Exception ex)
             {
-
+                logger.LogError(ex, ex.Message);
             }
             return false;
         }
