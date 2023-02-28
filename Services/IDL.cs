@@ -9,7 +9,7 @@ namespace Services
 {
     public interface IDL
     {
-        List<Exercise> GetExerciseList();
+        object GetExerciseList(string clientHashString);
         Exercise GetExerciseById(string exerciseId);
         List<Exercise> GetExercisesByMuscle(string muscleId);
         List<Exercise> GetExercisesByBodyPart(string bodyPartId);

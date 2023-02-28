@@ -23,7 +23,7 @@ public partial class WorkoutLog
 
     public int? Rpe { get; set; }
 
-    public string? Note { get; set; }
+    public string Note { get; set; }
 
     public virtual Workouts Workout { get; set; } = null!;
 }

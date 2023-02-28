@@ -1,5 +1,9 @@
 ﻿using BusinessEntities.EF;
 using BusinessEntities.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 
 namespace Services
 {
@@ -7,9 +11,11 @@ namespace Services
     {
         private ClientDBContext db = new ClientDBContext();
 
-        public List<Exercise> GetExerciseList()
+        public object GetExerciseList(string clientHashString)
         {
             List<Exercise> exerciseList = new List<Exercise>();
+            string serverHashString = "";
+
             try
             {
                 exerciseList = db.Exercises.Select(e => new Exercise
@@ -17,12 +23,39 @@ namespace Services
                     ExerciseId = e.ExerciseId,
                     ExerciseName = e.ExerciseName
                 }).ToList();
+
+                serverHashString = getHashString(exerciseList);
             }
             catch (Exception ex)
             {
-                
+
             }
-            return exerciseList;
+
+            if (serverHashString == getUnescapedHashString(clientHashString))
+            {
+                return new { ExerciseList = new List<Exercise>(), HashString = serverHashString, NeedsUpdate = 0 };
+            }
+            else
+            {
+                return new { ExerciseList = exerciseList, HashString = serverHashString, NeedsUpdate = 1 };
+            }
+        }
+
+        private string getUnescapedHashString(string hbs)
+        {
+            return System.Text.RegularExpressions.Regex.Unescape(hbs);
+        }
+
+        private string getHashString(object o)
+        {
+            string oString = JsonSerializer.Serialize(o);
+            byte[] bytes = Encoding.UTF8.GetBytes(oString);
+
+            SHA256 sha256 = SHA256.Create();
+
+            byte[] hashBytes = sha256.ComputeHash(bytes);
+
+            return Encoding.UTF8.GetString(hashBytes);
         }
 
         public Exercise GetExerciseById(string exerciseId)

@@ -19,9 +19,9 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpGet("ExerciseList")]
-        public List<Exercise> GetExerciseList()
+        public object GetExerciseList(string hashString = "")
         {
-            return DL.GetExerciseList();
+            return DL.GetExerciseList(hashString);
         }
 
         [HttpGet("ExerciseById/{exerciseId}")]
