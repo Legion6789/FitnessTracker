@@ -62,19 +62,13 @@
     <Folder Include="Data Scripts" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\BodyParts.sql" />
-    <Build Include="dbo\Tables\Cycles.sql" />
-    <Build Include="dbo\Tables\ExerciseMuscleMapping.sql" />
-    <Build Include="dbo\Tables\Exercises.sql" />
-    <Build Include="dbo\Tables\Muscles.sql" />
-    <Build Include="dbo\Tables\PhaseCycleMapping.sql" />
-    <Build Include="dbo\Tables\Phases.sql" />
-    <Build Include="dbo\Tables\Workouts.sql" />
-    <Build Include="dbo\Tables\WorkoutLog.sql" />
-    <Build Include="dbo\Tables\WorkoutExerciseMapping.sql" />
-    <Build Include="dbo\Tables\CycleWorkoutMapping.sql" />
+    <None Include="Data Scripts\Populate LU Tables.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data Scripts\Populate LU Tables.sql" />
+    <Build Include="dbo\Tables\Exercise.sql" />
+    <Build Include="dbo\Tables\ExerciseSet.sql" />
+    <Build Include="dbo\Tables\SetLog.sql" />
+    <Build Include="dbo\Tables\WorkoutLog.sql" />
+    <Build Include="dbo\Tables\WorkoutTemplate.sql" />
   </ItemGroup>
 </Project>

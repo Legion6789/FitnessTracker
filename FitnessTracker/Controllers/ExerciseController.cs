@@ -20,27 +20,17 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpGet("ExerciseList")]
-        public object GetExerciseList(string hashString = "")
+        public object GetExerciseList()
         {
-            return DL.GetExerciseList(hashString);
+            //return DL.GetExerciseList(hashString);
+            return new List<Exercise>();
         }
 
         [HttpGet("ExerciseById/{exerciseId}")]
-        public Exercise GetExerciseById(string exerciseId)
+        public Exercise GetExerciseById(Guid exerciseId)
         {
-            return DL.GetExerciseById(exerciseId);
-        }
-
-        [HttpGet("ExerciseByMuscle/{muscleId}")]
-        public List<Exercise> GetExercisesByMuscle(string muscleId)
-        {
-            return DL.GetExercisesByMuscle(muscleId);
-        }
-
-        [HttpGet("ExerciseByBodyPart/{bodyPartId}")]
-        public List<Exercise> GetExercisesByBodyPart(string bodyPartId)
-        {
-            return DL.GetExercisesByBodyPart(bodyPartId);
+            //return DL.GetExerciseById(exerciseId);
+            return new Exercise();
         }
     }
 }

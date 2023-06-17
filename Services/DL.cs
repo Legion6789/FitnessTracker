@@ -13,34 +13,35 @@ namespace Services
         private ClientDBContext db = new ClientDBContext();
         public ILogger logger { get; set; }
 
-        public object GetExerciseList(string clientHashString)
+        public object GetExerciseList()
         {
-            List<Exercise> exerciseList = new List<Exercise>();
-            string serverHashString = "";
+            List<ExerciseModel> exerciseList = new List<ExerciseModel>();
 
-            try
-            {
-                exerciseList = db.Exercises.Select(e => new Exercise
-                {
-                    ExerciseId = e.ExerciseId,
-                    ExerciseName = e.ExerciseName
-                }).ToList();
+            //try
+            //{
+            //    exerciseList = db.Exercises.Select(e => new Exercise
+            //    {
+            //        ExerciseId = e.ExerciseId,
+            //        ExerciseName = e.ExerciseName
+            //    }).ToList();
 
-                serverHashString = getHashString(exerciseList);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
+            //    serverHashString = getHashString(exerciseList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, ex.Message);
+            //}
 
-            if (serverHashString == getUnescapedHashString(clientHashString))
-            {
-                return new { ExerciseList = new List<Exercise>(), HashString = serverHashString, NeedsUpdate = 0 };
-            }
-            else
-            {
-                return new { ExerciseList = exerciseList, HashString = serverHashString, NeedsUpdate = 1 };
-            }
+            //if (serverHashString == getUnescapedHashString(clientHashString))
+            //{
+            //    return new { ExerciseList = new List<Exercise>(), HashString = serverHashString, NeedsUpdate = 0 };
+            //}
+            //else
+            //{
+            //    return new { ExerciseList = exerciseList, HashString = serverHashString, NeedsUpdate = 1 };
+            //}
+
+            return exerciseList;
         }
 
         private string getUnescapedHashString(string hbs)
@@ -60,121 +61,100 @@ namespace Services
             return Encoding.UTF8.GetString(hashBytes);
         }
 
-        public Exercise GetExerciseById(string exerciseId)
+        public ExerciseModel GetExerciseById(Guid exerciseId)
         {
-            Exercise exercise = new Exercise();
+            ExerciseModel exercise = new ExerciseModel();
 
-            try
-            {
-                exercise = db.Exercises.Select(e => new Exercise { ExerciseId = e.ExerciseId, ExerciseName = e.ExerciseName })
-                    .FirstOrDefault(e => e.ExerciseId == exerciseId);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
+            //try
+            //{
+            //    exercise = db.Exercises.Select(e => new Exercise { ExerciseId = e.ExerciseId, ExerciseName = e.ExerciseName })
+            //        .FirstOrDefault(e => e.ExerciseId == exerciseId);
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, ex.Message);
+            //}
             return exercise;
         }
 
-        public List<Exercise> GetExercisesByMuscle(string muscleId)
+        public object GetWorkoutList()
         {
-            List<Exercise> exerciseList = new List<Exercise>();
+            List<WorkoutTemplateModel> workoutList = new List<WorkoutTemplateModel>();
+            //string serverHashString = "";
 
-            try
-            {
-                exerciseList = db.ExerciseMuscleMapping.Where(e => e.MuscleId == muscleId)
-                    .Select(e => new Exercise { ExerciseId = e.ExerciseId, ExerciseName = e.Exercise.ExerciseName }).ToList();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
-            return exerciseList;
-        }
+            //try
+            //{
+            //    workoutList = db.Workouts.Select(w => new Workout { WorkoutId = w.WorkoutId, WorkoutName = w.WorkoutName }).ToList();
+            //    serverHashString = getHashString(workoutList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, ex.Message);
+            //}
 
-        public List<Exercise> GetExercisesByBodyPart(string bodyPartId)
-        {
-            List<Exercise> exerciseList = new List<Exercise>();
+            //if (serverHashString == getUnescapedHashString(clientHashString))
+            //{
+            //    return new { WorkoutList = new List<Workout>(), HashString = serverHashString, NeedsUpdate = 0 };
+            //}
+            //else
+            //{
+            //    return new { WorkoutList = workoutList, HashString = serverHashString, NeedsUpdate = 1 };
+            //}
 
-            try
-            {
-                List<string> muscleIds = db.Muscles.Where(b => b.BodyPartId == bodyPartId).Select(e => e.MuscleId).ToList();
-                exerciseList = db.ExerciseMuscleMapping.Where(e => muscleIds.Contains(e.MuscleId))
-                    .Select(e => new Exercise { ExerciseId = e.ExerciseId, ExerciseName = e.Exercise.ExerciseName }).ToList();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
-            return exerciseList;
-        }
-
-        public List<Workout> GetWorkoutList()
-        {
-            List<Workout> workoutList = new List<Workout>();
-
-            try
-            {
-                workoutList = db.Workouts.Select(w => new Workout { WorkoutId = w.WorkoutId, WorkoutName = w.WorkoutName }).ToList();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
             return workoutList;
         }
 
-        public Workout GetWorkoutById(int workoutId)
+        public WorkoutTemplateModel GetWorkoutById(Guid workoutId)
         {
-            Workout workout = new Workout();
+            WorkoutTemplateModel workout = new WorkoutTemplateModel();
 
-            try
-            {
-                var w = db.Workouts.FirstOrDefault(w => w.WorkoutId == workoutId);
+            //try
+            //{
+            //    var w = db.Workouts.FirstOrDefault(w => w.WorkoutId == workoutId);
 
-                if (w != null)
-                {
-                    workout.WorkoutId = workoutId;
-                    workout.WorkoutName = w.WorkoutName;
+            //    if (w != null)
+            //    {
+            //        workout.WorkoutId = workoutId;
+            //        workout.WorkoutName = w.WorkoutName;
 
-                    workout.ExerciseList = db.WorkoutExerciseMapping.Where(sem => sem.WorkoutId == workoutId)
-                        .Select(e => new Exercise
-                        {
-                            ExerciseId = e.ExerciseId,
-                            ExerciseName = e.Exercise.ExerciseName,
-                            Reps = e.Reps,
-                            Sets = e.Sets,
-                            TargetRPE = e.TargetRpe,
-                            RestPeriod = e.RestPeriod
-                        }).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
+            //        workout.ExerciseList = db.WorkoutExerciseMapping.Where(sem => sem.WorkoutId == workoutId)
+            //            .Select(e => new Exercise
+            //            {
+            //                ExerciseId = e.ExerciseId,
+            //                ExerciseName = e.Exercise.ExerciseName,
+            //                Reps = e.Reps,
+            //                Sets = e.Sets,
+            //                TargetRPE = e.TargetRpe,
+            //                RestPeriod = e.RestPeriod
+            //            }).ToList();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, ex.Message);
+            //}
             return workout;
         }
 
 
-        public bool AddWorkout(Workout workout)
+        public bool AddWorkout(WorkoutTemplateModel workout)
         {
-            try
-            {
-                Workouts w = new Workouts
-                {
-                    WorkoutName = workout.WorkoutName
-                };
+            //try
+            //{
+            //    Workouts w = new Workouts
+            //    {
+            //        WorkoutName = workout.WorkoutName
+            //    };
 
-                db.Workouts.Add(w);
-                db.SaveChanges();
+            //    db.Workouts.Add(w);
+            //    db.SaveChanges();
                 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
+            //    return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, ex.Message);
+            //}
             return false;
         }
     }

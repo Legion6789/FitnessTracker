@@ -20,21 +20,25 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpGet("WorkoutList")]
-        public List<Workout> GetWorkoutList()
+        public object GetWorkoutList()
         {
-            return DL.GetWorkoutList();
+            //return DL.GetWorkoutList(hashString);
+            return new List<WorkoutTemplate>();
         }
 
-        [HttpGet("WorkoutById/{workoutId}")]
-        public Workout GetWorkoutById(int workoutId)
+        //[HttpGet("WorkoutById/{workoutId}")]
+        [HttpGet("WorkoutById")]
+        public WorkoutTemplate GetWorkoutById(int workoutId)
         {
-            return DL.GetWorkoutById(workoutId);
+            //return DL.GetWorkoutById(workoutId);
+            return new WorkoutTemplate();
         }
 
         [HttpPost("AddWorkout")]
-        public bool PostAddWorkout(Workout workout)
+        public bool PostAddWorkout(WorkoutTemplate workout)
         {
-            return DL.AddWorkout(workout);
+            //return DL.AddWorkout(workout);
+            return true;
         }
     }
 }
