@@ -22,15 +22,13 @@ namespace FitnessTracker.Controllers
         [HttpGet("ExerciseList")]
         public object GetExerciseList()
         {
-            //return DL.GetExerciseList(hashString);
-            return new List<Exercise>();
+            return DL.GetExerciseList();
         }
 
         [HttpGet("ExerciseById/{exerciseId}")]
-        public Exercise GetExerciseById(Guid exerciseId)
+        public ExerciseModel GetExerciseById(Guid exerciseId)
         {
-            //return DL.GetExerciseById(exerciseId);
-            return new Exercise();
+            return DL.GetExerciseById(exerciseId);
         }
     }
 }

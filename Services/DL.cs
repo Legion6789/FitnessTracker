@@ -17,20 +17,18 @@ namespace Services
         {
             List<ExerciseModel> exerciseList = new List<ExerciseModel>();
 
-            //try
-            //{
-            //    exerciseList = db.Exercises.Select(e => new Exercise
-            //    {
-            //        ExerciseId = e.ExerciseId,
-            //        ExerciseName = e.ExerciseName
-            //    }).ToList();
-
-            //    serverHashString = getHashString(exerciseList);
-            //}
-            //catch (Exception ex)
-            //{
-            //    logger.LogError(ex, ex.Message);
-            //}
+            try
+            {
+                exerciseList = db.Exercise.Select(e => new ExerciseModel
+                {
+                    exerciseId = e.ExerciseId,
+                    exerciseName = e.ExerciseName
+                }).OrderBy(e => e.exerciseName).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+            }
 
             //if (serverHashString == getUnescapedHashString(clientHashString))
             //{
@@ -65,15 +63,16 @@ namespace Services
         {
             ExerciseModel exercise = new ExerciseModel();
 
-            //try
-            //{
-            //    exercise = db.Exercises.Select(e => new Exercise { ExerciseId = e.ExerciseId, ExerciseName = e.ExerciseName })
-            //        .FirstOrDefault(e => e.ExerciseId == exerciseId);
-            //}
-            //catch (Exception ex)
-            //{
-            //    logger.LogError(ex, ex.Message);
-            //}
+            try
+            {
+                exercise = db.Exercise.Select(e => new ExerciseModel { exerciseId = e.ExerciseId,
+                                                                       exerciseName = e.ExerciseName })
+                                      .FirstOrDefault(e => e.exerciseId == exerciseId);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+            }
             return exercise;
         }
 
