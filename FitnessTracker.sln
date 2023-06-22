@@ -1,15 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessTracker", "FitnessTracker\FitnessTracker.csproj", "{68BAFA6B-AA58-4DAB-B936-8B4EFCA19D29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessTracker", "FitnessTracker\FitnessTracker.csproj", "{68BAFA6B-AA58-4DAB-B936-8B4EFCA19D29}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "FitnessTrackerDB", "FitnessTrackerDB\FitnessTrackerDB.sqlproj", "{F8AE89D1-7A6E-46B8-9574-4CA7E3ED2B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessEntities", "BusinessEntities\BusinessEntities.csproj", "{B74A5AE7-A4B1-46F2-A89A-171414ECF781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessEntities", "BusinessEntities\BusinessEntities.csproj", "{B74A5AE7-A4B1-46F2-A89A-171414ECF781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{969A98B4-E890-4AC4-8832-1F9B25B3DE3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{969A98B4-E890-4AC4-8832-1F9B25B3DE3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
