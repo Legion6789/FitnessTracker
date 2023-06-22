@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using BusinessEntities;
 
 namespace BusinessEntities.EF;
 
@@ -26,8 +27,7 @@ public partial class ClientDBContext : DbContext
     public virtual DbSet<WorkoutTemplate> WorkoutTemplate { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DevServer;initial catalog=FitnessTracker;user id=sa;password=pass@word1;MultipleActiveResultSets=True;Encrypt=False");
+        => optionsBuilder.UseSqlServer(ConnectionStringHolder.ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

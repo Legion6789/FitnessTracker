@@ -22,6 +22,7 @@ namespace FitnessTracker.Controllers
         [HttpGet("ExerciseList")]
         public object GetExerciseList()
         {
+            //return new List<ExerciseModel> { new ExerciseModel { exerciseId = Guid.NewGuid(), exerciseName = "Bench Press" }, new ExerciseModel { exerciseId = Guid.NewGuid(), exerciseName = "Dude bro" } };
             return DL.GetExerciseList();
         }
 
