@@ -1,7 +1,10 @@
 ﻿using BusinessEntities.EF;
 using BusinessEntities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Services;
+using System.Diagnostics.Metrics;
 
 namespace FitnessTracker.Controllers
 {
@@ -20,16 +23,23 @@ namespace FitnessTracker.Controllers
         }
 
         [HttpGet("ExerciseList")]
-        public object GetExerciseList()
+        public async Task<ActionResult<List<ExerciseModel>>> GetExerciseList()
         {
-            //return new List<ExerciseModel> { new ExerciseModel { exerciseId = Guid.NewGuid(), exerciseName = "Bench Press" }, new ExerciseModel { exerciseId = Guid.NewGuid(), exerciseName = "Dude bro" } };
-            return DL.GetExerciseList();
+            return Ok(await DL.GetExerciseList());
         }
 
         [HttpGet("ExerciseById/{exerciseId}")]
-        public ExerciseModel GetExerciseById(Guid exerciseId)
+        public async Task<ActionResult<ExerciseModel>> GetExerciseById(Guid exerciseId)
         {
-            return DL.GetExerciseById(exerciseId);
+            return Ok(await DL.GetExerciseById(exerciseId));
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<ExerciseModel>> PostExercise(string exerciseName)
+        {
+            var exercise = await DL.AddExercise(exerciseName);
+            return CreatedAtAction(actionName: "GetExerciseById", routeValues: new { exerciseId = exercise.exerciseId }, exercise);
         }
     }
 }

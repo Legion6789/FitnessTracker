@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BusinessEntities;
+using BusinessEntities.Authentication;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace BusinessEntities.EF;
 
-public partial class ClientDBContext : DbContext
+public partial class ClientDBContext : IdentityDbContext<ApiUser>
 {
     public ClientDBContext()
     {
@@ -118,6 +121,21 @@ public partial class ClientDBContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("workoutName");
+        });
+
+        modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+        {
+            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+        });
+
+        modelBuilder.Entity<IdentityUserRole<string>>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.RoleId });
+        });
+
+        modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
         });
 
         OnModelCreatingPartial(modelBuilder);

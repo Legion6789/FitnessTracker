@@ -11,8 +11,9 @@ namespace Services
     public interface IDL
     {
         ILogger logger { get; set; }
-        object GetExerciseList();
-        ExerciseModel GetExerciseById(Guid exerciseId);
+        Task<List<ExerciseModel>> GetExerciseList();
+        Task<ExerciseModel> GetExerciseById(Guid exerciseId);
+        Task<ExerciseModel> AddExercise(string exerciseName);
         object GetWorkoutList();
         WorkoutTemplateModel GetWorkoutById(Guid workoutId);
         bool AddWorkout(WorkoutTemplateModel workout);

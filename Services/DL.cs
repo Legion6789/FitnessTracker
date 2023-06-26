@@ -1,5 +1,7 @@
 ﻿using BusinessEntities.EF;
 using BusinessEntities.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Tools;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
@@ -13,17 +15,17 @@ namespace Services
         private ClientDBContext db = new ClientDBContext();
         public ILogger logger { get; set; }
 
-        public object GetExerciseList()
+        public async Task<List<ExerciseModel>> GetExerciseList()
         {
             List<ExerciseModel> exerciseList = new List<ExerciseModel>();
 
             try
             {
-                exerciseList = db.Exercise.Select(e => new ExerciseModel
+                exerciseList = await db.Exercise.Select(e => new ExerciseModel
                 {
                     exerciseId = e.ExerciseId,
                     exerciseName = e.ExerciseName
-                }).OrderBy(e => e.exerciseName).ToList();
+                }).OrderBy(e => e.exerciseName).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -59,20 +61,40 @@ namespace Services
             return Encoding.UTF8.GetString(hashBytes);
         }
 
-        public ExerciseModel GetExerciseById(Guid exerciseId)
+        public async Task<ExerciseModel> GetExerciseById(Guid exerciseId)
         {
             ExerciseModel exercise = new ExerciseModel();
 
             try
             {
-                exercise = db.Exercise.Select(e => new ExerciseModel { exerciseId = e.ExerciseId,
-                                                                       exerciseName = e.ExerciseName })
-                                      .FirstOrDefault(e => e.exerciseId == exerciseId);
+                exercise = await db.Exercise.Select(e => new ExerciseModel { exerciseId = e.ExerciseId, exerciseName = e.ExerciseName }).FirstOrDefaultAsync(e => e.exerciseId == exerciseId);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
             }
+
+            return exercise;
+        }
+
+        public async Task<ExerciseModel> AddExercise(string exerciseName)
+        {
+            ExerciseModel exercise = new ExerciseModel();
+
+            try
+            {
+                var newExercise = new Exercise() { ExerciseId = Guid.NewGuid(), ExerciseName = exerciseName };
+                await db.Exercise.AddAsync(newExercise);
+                await db.SaveChangesAsync();
+                
+                exercise.exerciseId = newExercise.ExerciseId;
+                exercise.exerciseName = newExercise.ExerciseName;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+            }
+
             return exercise;
         }
 
